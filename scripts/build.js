@@ -40,6 +40,8 @@ publicFiles.forEach(file => {
     const size = fs.statSync(destPath).size;
     totalBytes += size;
     console.log(`  ✓ Bundled public/${file} (${(size / 1024).toFixed(2)} KB)`);
+    // Also sync to root for zero-config static hosting
+    fs.copyFileSync(destPath, path.join(ROOT_DIR, file));
   }
 });
 
