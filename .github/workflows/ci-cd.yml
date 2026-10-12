@@ -1,0 +1,33 @@
+name: Production CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-build:
+    name: Automated Testing & Production Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Run Automated Test Suite (100% Pass Required)
+        run: npm test
+
+      - name: Compile Production Distribution Bundle
+        run: npm run build
+
+      - name: Verify Build Manifest & Assets
+        run: |
+          test -f dist/index.html
+          test -f dist/build-manifest.json
+          cat dist/build-manifest.json

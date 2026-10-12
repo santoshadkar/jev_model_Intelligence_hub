@@ -1,0 +1,230 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Jev Model Intelligence & Simulation API",
+    "description": "Enterprise Solutions Architecture API specification for Jev decision evaluation, benchmark telemetry, and architectural diagnostic triage.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Solutions Architecture Office",
+      "email": "architecture@internal.corp"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local Development / Production Microservice Server"
+    }
+  ],
+  "paths": {
+    "/evaluate": {
+      "post": {
+        "summary": "Run Jev Model Decision Evaluation",
+        "description": "Evaluates contextual payload against a question and output schema using the decoupled Jev decision engine.",
+        "operationId": "evaluateDecision",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Calibrated decision evaluation outcome",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/benchmark": {
+      "post": {
+        "summary": "Execute Side-by-Side Arena Benchmark (Jev vs. LLM)",
+        "description": "Runs concurrent simulated evaluations comparing Jev single-pass latency, cost, and schema integrity against generative LLM structured outputs.",
+        "operationId": "runBenchmark",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BenchmarkRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detailed comparative benchmark telemetry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BenchmarkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/diagnose": {
+      "post": {
+        "summary": "Architectural Diagnostic Triage",
+        "description": "Recommends whether to deploy Jev, an LLM, or a Hybrid Compound AI pipeline based on technical parameters.",
+        "operationId": "diagnoseUseCase",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiagnoseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Architectural recommendation with rationale and blueprint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiagnoseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Healthcheck Endpoint",
+        "responses": {
+          "200": {
+            "description": "Service is operational"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EvaluateRequest": {
+        "type": "object",
+        "required": ["question", "context", "output_type"],
+        "properties": {
+          "question": { "type": "string", "example": "Does this support inquiry demand immediate P0 page?" },
+          "context": { "type": "object", "additionalProperties": true },
+          "output_type": { "type": "string", "enum": ["boolean", "enum", "score"] },
+          "options": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Candidate choices if output_type is enum"
+          },
+          "threshold": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.5 }
+        }
+      },
+      "EvaluateResponse": {
+        "type": "object",
+        "required": ["model", "decision", "confidence", "latency_ms", "schema_valid", "paradigm"],
+        "properties": {
+          "model": { "type": "string", "example": "jev-system-one-v1" },
+          "decision": { "description": "Strictly typed result (bool, string, or number)" },
+          "confidence": { "type": "number", "example": 0.942 },
+          "latency_ms": { "type": "integer", "example": 87 },
+          "schema_valid": { "type": "boolean", "example": true },
+          "paradigm": { "type": "string", "example": "discriminative_non_autoregressive" },
+          "calibration_details": {
+            "type": "object",
+            "properties": {
+              "method": { "type": "string", "example": "RLCD (Reinforcement Learning for Calibrated Decisions)" },
+              "brier_score_target": { "type": "number", "example": 0.042 }
+            }
+          }
+        }
+      },
+      "BenchmarkRequest": {
+        "type": "object",
+        "required": ["scenario_id"],
+        "properties": {
+          "scenario_id": { "type": "string", "enum": ["guardrail_pii", "p0_triage", "agent_router", "qa_judge"] }
+        }
+      },
+      "BenchmarkResponse": {
+        "type": "object",
+        "required": ["scenario_id", "jev_result", "llm_result", "comparison_summary"],
+        "properties": {
+          "scenario_id": { "type": "string" },
+          "jev_result": { "$ref": "#/components/schemas/EvaluateResponse" },
+          "llm_result": {
+            "type": "object",
+            "properties": {
+              "model": { "type": "string", "example": "gpt-4o-structured-outputs" },
+              "raw_output": { "type": "string" },
+              "parsed_decision": { "type": "object" },
+              "tokens_used": { "type": "integer" },
+              "latency_ms": { "type": "integer" },
+              "schema_valid": { "type": "boolean" },
+              "estimated_cost_usd": { "type": "number" }
+            }
+          },
+          "comparison_summary": {
+            "type": "object",
+            "properties": {
+              "speedup_factor": { "type": "number", "example": 14.2 },
+              "cost_reduction_factor": { "type": "number", "example": 38.5 },
+              "risk_mitigation": { "type": "string" }
+            }
+          }
+        }
+      },
+      "DiagnoseRequest": {
+        "type": "object",
+        "required": ["requires_generative_text", "latency_budget_ms", "output_format"],
+        "properties": {
+          "requires_generative_text": { "type": "boolean" },
+          "latency_budget_ms": { "type": "integer" },
+          "output_format": { "type": "string", "enum": ["free_text", "strict_schema", "mixed"] },
+          "requires_calibrated_confidence": { "type": "boolean" },
+          "budget_sensitivity": { "type": "string", "enum": ["high", "medium", "low"] }
+        }
+      },
+      "DiagnoseResponse": {
+        "type": "object",
+        "required": ["recommendation", "primary_engine", "fit_score", "rationale", "suggested_architecture"],
+        "properties": {
+          "recommendation": { "type": "string", "enum": ["Jev Model", "Generative LLM", "Compound AI (Jev + LLM)"] },
+          "primary_engine": { "type": "string" },
+          "fit_score": { "type": "integer" },
+          "rationale": { "type": "array", "items": { "type": "string" } },
+          "suggested_architecture": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid payload format",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

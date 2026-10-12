@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Secrets and environment configs (Zero-Hardcoding standard)
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db

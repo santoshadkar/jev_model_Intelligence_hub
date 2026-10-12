@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  jev-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jev-portal-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - JEV_API_BASE_URL=https://api.typesafe.ai/v1
+      - CORS_ORIGIN=*
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    resources:
+      limits:
+        cpus: '1.0'
+        memory: 512M

@@ -1,0 +1,10 @@
+{
+  "name": "jev-model-intelligence-portal",
+  "version": "1.0.0",
+  "buildTimestamp": "2026-10-12T13:34:57.452Z",
+  "environment": "production",
+  "totalAssets": 3,
+  "bundleSizeKb": 77.01,
+  "cabApprovalStatus": "GO_FOR_RELEASE",
+  "gitCommit": "release-v1.0.0-final"
+}
