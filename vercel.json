@@ -1,5 +1,13 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "routes": [
+    { "src": "/api/health", "dest": "/api/health.js" },
+    { "src": "/api/evaluate", "dest": "/api/evaluate.js" },
+    { "src": "/api/benchmark", "dest": "/api/benchmark.js" },
+    { "src": "/api/diagnose", "dest": "/api/diagnose.js" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }

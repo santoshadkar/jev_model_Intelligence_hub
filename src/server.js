@@ -206,4 +206,9 @@ if (require.main === module) {
   });
 }
 
-module.exports = { server, jevEngine, diagnosticEngine };
+const handler = (req, res) => server.emit('request', req, res);
+handler.server = server;
+handler.jevEngine = jevEngine;
+handler.diagnosticEngine = diagnosticEngine;
+
+module.exports = handler;
