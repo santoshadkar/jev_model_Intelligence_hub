@@ -95,3 +95,27 @@ erDiagram
    - Maximum incoming body size strictly enforced at 1MB to prevent memory exhaustion / DoS attacks.
 4. **Graceful Connection Draining:**
    - On `SIGTERM`/`SIGINT`, in-flight requests finish gracefully within a 5,000ms window before process termination.
+
+---
+
+## 5. System Topology & Compound AI Flowchart
+
+```mermaid
+flowchart TD
+    Client["Client / User Ingress"] --> Gate1{"Jev Gate 1: Security Guardrail (~75ms)"}
+    
+    Gate1 -- "Violation (Injection / PII)" --> Drop["Block Request (Fast Drop, $0.00 Cost)"]
+    Gate1 -- "Safe (Confidence > 0.85)" --> Gate2{"Jev Gate 2: Fast Intent Router (~85ms)"}
+    
+    Gate2 -- "Deterministic Tool Execution" --> API["Backend Microservice (Total ~160ms)"]
+    Gate2 -- "Generative Synthesis Needed" --> RAG["Vector DB / Context Augmentation"]
+    
+    RAG --> LLM["Generative LLM (System 2 Synthesis ~1,800ms)"]
+    LLM --> Auditor{"Jev Factual Auditor (~90ms)"}
+    
+    Auditor -- "Grounded (Confidence >= 0.95)" --> Deliver["Deliver Validated Safe Output"]
+    Auditor -- "Hallucination Detected" --> Fallback["Fallback / Re-prompt / Escalate"]
+    
+    API --> Deliver
+```
+

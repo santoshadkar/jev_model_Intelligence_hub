@@ -3,11 +3,39 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initDiagramTabs();
   initBenchmarkArena();
   initDiagnosticWizard();
   initPlayground();
   initCookbook();
 });
+
+// ============================================================================
+// 0. Interactive Architecture Diagram Tabs
+// ============================================================================
+function initDiagramTabs() {
+  const tabs = document.querySelectorAll('.diag-tab');
+  const panes = document.querySelectorAll('.diagram-pane');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panes.forEach(p => {
+        p.classList.remove('active');
+        p.style.display = 'none';
+      });
+
+      tab.classList.add('active');
+      const targetId = tab.getAttribute('data-diagram');
+      const targetPane = document.getElementById(targetId);
+      if (targetPane) {
+        targetPane.classList.add('active');
+        targetPane.style.display = 'block';
+      }
+    });
+  });
+}
+
 
 // ============================================================================
 // 1. Interactive Benchmark Arena

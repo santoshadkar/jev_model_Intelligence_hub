@@ -1,4 +1,4 @@
-/* Jev Portal Production Bundle v1.0.0 - Built 2026-10-12T13:34:57.416Z */
+/* Jev Portal Production Bundle v1.0.0 - Built 2026-10-12T13:44:27.934Z */
 /* ==========================================================================
    Jev Model Intelligence Portal - Modern Enterprise Design System
    ========================================================================== */
@@ -558,6 +558,119 @@ body {
   font-size: 13px;
   color: #cbd5e1;
   margin-bottom: 0;
+}
+
+/* --- Interactive Architecture Diagrams Section --- */
+.diagram-tabs-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.diag-tab {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.diag-tab:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.diag-tab.active {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 16px var(--accent-cyan-glow);
+}
+
+.diagram-viewer-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  overflow: hidden;
+}
+
+.diagram-pane {
+  display: none;
+}
+
+.diagram-pane.active {
+  display: block;
+}
+
+.diag-info-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.diag-info-bar h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.diag-info-bar p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  max-width: 650px;
+}
+
+.diag-legend {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot-cyan, .dot-purple, .dot-green {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-cyan { background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); }
+.dot-purple { background: var(--accent-purple); box-shadow: 0 0 8px var(--accent-purple); }
+.dot-green { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+
+.svg-diagram-wrapper {
+  background: #05080e;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.responsive-svg {
+  width: 100%;
+  height: auto;
+  min-width: 700px;
+  display: block;
 }
 
 /* --- Arena Section --- */
