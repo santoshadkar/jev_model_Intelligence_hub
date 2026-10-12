@@ -1,4 +1,4 @@
-const { JevCoreEngine } = require('../src/core/jev_simulator');
+const { JevCoreEngine } = require('./jev_simulator');
 
 const jev = new JevCoreEngine();
 

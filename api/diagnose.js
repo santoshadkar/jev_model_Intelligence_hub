@@ -1,4 +1,4 @@
-const { ArchitecturalDiagnosticEngine } = require('../src/core/decision_matrix');
+const { ArchitecturalDiagnosticEngine } = require('./decision_matrix');
 
 const diagnosticEngine = new ArchitecturalDiagnosticEngine();
 

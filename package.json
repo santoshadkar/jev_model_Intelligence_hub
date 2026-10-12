@@ -2,7 +2,6 @@
   "name": "jev-model-intelligence-portal",
   "version": "1.0.0",
   "description": "Enterprise intelligence portal for the Jev Foundation Model, architectural comparators, and disambiguation from LLMs & JEPA",
-  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "build": "node scripts/build.js",
